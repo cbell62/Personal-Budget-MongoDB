@@ -86,7 +86,7 @@ app.use (function (err, req, res, next) {
         res.status(401).json({
             success: false,
             officialError: err,
-            err: 'Username of password is incorrect 2'
+            err: 'Username or password is incorrect 2'
         });
     } else {
         next(err);
