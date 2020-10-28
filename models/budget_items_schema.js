@@ -19,6 +19,6 @@ const budgetItemsSchema = new mongoose.Schema({
         minlength: 6,
         maxlength: 6
     }
-}, { collection: 'budget' });
+}, { collection: 'budget_items' });
 
-module.exports = mongoose.model("budget", budgetItemsSchema);
+module.exports = mongoose.model("budget_items", budgetItemsSchema);
