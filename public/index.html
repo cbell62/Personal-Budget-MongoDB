@@ -3,30 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- This is an SEO Change -->
-    <meta name="description" 
-    content="This is a website to help with personal budgeting.">
     <title>Personal Budget</title>
-    <link rel="stylesheet" href="/reset.css">
-    <link rel="stylesheet" href="/main.css">
+    <meta name ="description" content="A website that describes a Personal Budget Management app that helps you better your finances!" >
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
 
     <div class="menu">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/login.html">Login</a></li>
-            <li><a href="https://google.com">Google</a></li>
-        </ul>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/about.html">About</a> |
+            <a href="/login.html">Login</a> |
+            <a href="https://google.com">Google</a>
+        </nav>
     </div>
 
     <div class="hero">
         <h1>Personal Budget</h1>
         <h2>A personal-budget management app</h2>
+        <img src ="bg.png" alt = "Personal Budget Management Picture">
+
     </div>
 
-    <div class="container center">
+
+    <main class="container center">
 
         <div class="page-area">
 
@@ -90,69 +91,55 @@
             <div class="text-box">
                 <h1>Chart</h1>
                 <p>
-                    <canvas id = "myChart" width="400" height="400"></canvas>
+                    <canvas id="myChart" width="400" height="400"></canvas>
                 </p>
             </div>
 
         </div>
 
-    </div>
-    <!-- This is an A11y Change -->
-    <button class="button" aria-required="true">Default</button>
+    </main>
 
-    <div class="bottom">
+    <footer class="bottom">
         <div class="center">
             All rights reserved &copy; Fabio Nolasco
         </div>
-    </div>
+    </footer>
 
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
-      integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
-      crossorigin="anonymous"
-    ></script>
-
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
-      integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg=="
-      crossorigin="anonymous"
-    ></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
     <script>
-      var dataSource = {
-        datasets: [
-          {
-            data: [],
-            backgroundColor: [
+        var dataSource = {
+            datasets: [
+                {
+                    data: [],
+                    backgroundColor: [],
+                },
             ],
-          },
-        ],
-        labels: [],
-      };
+            labels: []
+        };
 
-      function createChart() {
-        var ctx = document.getElementById("myChart").getContext("2d");
-        var myPieChart = new Chart(ctx, {
-          type: "pie",
-          data: dataSource,
-        });
-      }
+        function createChart() {
+            var ctx = document.getElementById("myChart").getContext("2d");
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: dataSource
+            });
+        }
 
-      function getBudget() {
-        axios.get("/budget").then(function (res) {
-          console.log(res);
-          for (var i = 0; i < res.data.length; i++) {
-            dataSource.datasets[0].data[i] = res.data[i].budget;
-            dataSource.labels[i] = res.data[i].title;
-            dataSource.datasets[0].backgroundColor[i] = res.data[i].color;
-          }
-          createChart();
-        });
-      }
-      getBudget();
+        function getBudget() {
+            axios.get('http://localhost:3000/budget')
+            .then(function (res) {
+             //   console.log(res.data);
+                for (var i = 0; i < res.data.length; i++){
+                    dataSource.datasets[0].data[i] = res.data[i].value;
+                    dataSource.labels[i] = res.data[i].title;
+                    dataSource.datasets[0].backgroundColor[i] = res.data[i].color;
+                }
+                createChart();
+            });
+        }
+        getBudget();
     </script>
-  </body>
-  <footer>
-    <p>This was modified by Calista Bell</p>
- </footer>
+
+</body>
 </html>
