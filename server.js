@@ -30,7 +30,7 @@ app.get('/budget', (req, res) => {
         });
 });
 
-app.put('/budget', (req, res) => {
+app.post('/budget', (req, res) => {
     mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => {
             var budgetItem = new budgetItemsModel({
