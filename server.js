@@ -1,58 +1,67 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const budgetItemsModel = require('./models/budget_items_schema');
+// Budget API
 
+const express = require("express");
+const cors = require("cors");
 const app = express();
 const port = 3000;
-const url = 'mongodb://localhost:27017/budget';
+const mongoose = require("mongoose");
+const budgetModel = require("./models/budgetSchema");
 
-app.use('/', express.static('public'));
-app.use(express.json());
+let url = "mongodb://localhost:27017/budget";
+var bodyParser = require("body-parser");
 
-app.get('/hello', (req, res) => {
-    res.send('Hello World!');
+app.use(cors());
+app.use(bodyParser.json());
+app.use("/", express.static("public"));
+
+app.get("/hello", (req, res) => {
+  res.send("Hello World!");
 });
 
-app.get('/budget', (req, res) => {
-    mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-        .then(() => {
-            budgetItemsModel.find({})
-                .then((data) => {
-                    res.json(data);
-                    mongoose.connection.close();
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+app.get("/budget", (req, res) => {
+  mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+          .then(() => {
+            console.log("Connected to the database");
+            budgetModel.find({})
+                        .then((data)=>{
+                          console.log(data);
+                          res.json(data);
+                          mongoose.connection.close();
+                        })
+                        .catch((connectionError)=>{
+                          console.log(connectionError);
+                        })  
+          })
+          .catch((connectionError) => {
+            console.log(connectionError);
+          })
 });
 
-app.post('/budget', (req, res) => {
-    mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-        .then(() => {
-            var budgetItem = new budgetItemsModel({
-                title: req.body.title,
-                value: req.body.value,
-                color: req.body.color
+app.put("/add", (req, res) => {
+  console.log(req.body);
+  mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+          .then(()=>{
+            console.log("Connected to the database");
+            let addBudget = new budgetModel({
+              title: req.body.title,
+              value: req.body.value,
+              color: req.body.color,
             });
-
-            budgetItemsModel.insertMany(budgetItem)
-                .then((data) => {
-                    res.json(data);
-                    mongoose.connection.close();
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            budgetModel.insertMany(addBudget)
+                        .then((data)=> {
+                          console.log(data);
+                          res.json(data);
+                          mongoose.connection.close();
+                        })
+                        .catch((connectionError)=>{
+                          console.log(connectionError);
+                        })  
+          })
+          .catch((connectionError) => {
+            console.log(connectionError);
+          })
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`API served at http://localhost:${port}`);
 });
