@@ -5,27 +5,24 @@
 body {
     font-size: 10px;
     font-family: Tahoma, Arial;
-    text-align: center;
 }
 
-div.menu {
+nav, header {
     width: 100%;
     background-color: #4d5791;
     height: 44px;
     padding: 0 40px;
-    text-align: center;
-    font-size: 17px;
 }
 
-div.menu ul,
-div.menu ul li {
+nav ul,
+nav ul li {
     margin: 0;
     padding: 0 ;
     list-style: none;
     display: inline-block;
 }
 
-div.menu ul li a {
+nav ul li a {
     display: block;
     padding: 0 20px;
     line-height: 44px;
@@ -35,38 +32,38 @@ div.menu ul li a {
     margin: 0;
 }
 
-div.menu ul li a:hover  {
+nav ul li a:hover  {
     background-color: white;
     color: #4d5791;
 }
 
-div.hero {
+header {
     height: 350px;
     background-color: #b4c6f0;
-    background-image: url('/bg.png');
+    background-image: url('bg.png');
     background-size: 400px;
     background-repeat: no-repeat;
     background-position: center bottom;
     padding-top: 40px;
 }
 
-div.hero h1,
-div.hero h2 {
+header h1,
+header h2 {
     text-align: center;
     margin: 0;
 }
 
-div.hero h1 {
-    color: #fff;
+header h1 {
+    color: #353535;
     font-size: 4.2em;
     margin-bottom: 20px;
 }
 
-div.hero h2 {
-    color: #4d5791;
+header h2 {
+    color: #001799;
 }
 
-.container {
+section {
     padding: 40px;
     width: 100%;
 }
@@ -76,7 +73,7 @@ div.hero h2 {
     display: inline-block;
 }
 
-.bottom {
+footer {
     height: 50px;
     background-color: #b4c6f0;
     padding: 40px;
@@ -86,7 +83,7 @@ div.hero h2 {
     text-align: center;
 }
 
-.container div.text-box {
+section article {
     display: inline-block;
     width: 100%;
     max-width: 340px;
@@ -94,13 +91,17 @@ div.hero h2 {
     margin: 20px;
 }
 
-@media screen and (min-width: 768px) {
-    .container .div.text-box {
-        margin: 10px;
-    }
+section article p {
+    font-size: 15px;
 }
 
-img{
-    padding: 5px;
-    width: 300px;
+section article h1 {
+    font-size: 20px;
+    text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+    section article {
+        margin: 10px;
+    }
 }
